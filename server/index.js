@@ -7,17 +7,12 @@ const syncAndSeed  = require('../db/syncAndSeed');
 
 const port = process.env.PORT || 3000;
 
+app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
-app.get('/', (req, res)=> res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/', (req, res)=> res.sendFile(path.join('/Users/bharadwajmadduri/Desktop/Fullstack_Stuff/DealersChoiceFullStack/index.html')));
 
-app.get('/cars', async(req, res, next) => {
-    try{
-        res.send(await Car.findAll());
-    }
-    catch(ex){
-        next(ex);
-    }
-});
+app.use('/api/cars', require('./routes/cars'));
+app.use('/api/brands', require('./routes/brands'));
 
 
 
